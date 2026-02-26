@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function AchievementsScreen() {
+export default function SessionIndex() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Achievements</Text>
-      <Text>Track your milestones here.</Text>
+      <Text style={styles.title}>Sessions</Text>
+      <Text>Select a session to view details.</Text>
     </View>
   );
 }
