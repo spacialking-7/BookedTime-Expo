@@ -1,20 +1,16 @@
-import { View, Text, StyleSheet, Switch } from 'react-native';
-import { useState } from 'react';
+import { View, Button, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
 
-export default function ProfileScreen() {
-  const [darkMode, setDarkMode] = useState(false);
+export default function ProfileMain() {
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile</Text>
-
-      <Text>Dark Mode</Text>
-      <Switch value={darkMode} onValueChange={setDarkMode} />
+      <Button title="Edit Profile" onPress={() => router.push('EditProfile')} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
-  title: { fontSize: 24, fontWeight: "bold", marginBottom: 10 }
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center' }
 });
