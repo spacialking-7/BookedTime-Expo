@@ -3,9 +3,13 @@ import { Avatar, Card, ProgressBar } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { theme } from "../../constants/theme";
+import { ThemeContext } from "../../constants/themeContext";
+import { useContext } from "react";
 
 export default function ProfileMain() {
+  //dark mode/ light mode function
+  const { theme, isDark, toggleTheme } = useContext(ThemeContext);
+
   const router = useRouter();
   const [sessions, setSessions] = useState([]);
   const [profile, setProfile] = useState({ username: "", bio: "" });
@@ -16,7 +20,9 @@ export default function ProfileMain() {
       const storedProfile = await AsyncStorage.getItem("profile");
 
       setSessions(storedSessions ? JSON.parse(storedSessions) : []);
-      setProfile(storedProfile ? JSON.parse(storedProfile) : { username: "", bio: "" });
+      setProfile(
+        storedProfile ? JSON.parse(storedProfile) : { username: "", bio: "" },
+      );
     };
 
     loadData();
@@ -29,22 +35,35 @@ export default function ProfileMain() {
   return (
     <View style={styles.container}>
       <Avatar.Icon size={100} icon="account" style={styles.avatar} />
-
       <Text style={styles.title}>
         {profile.username ? profile.username : "Your Profile"}
       </Text>
+      
+      //light mode dark mode toggle switch
+      <View style={{ marginBottom: theme.spacing(3), alignItems: "center" }}>
+        <Text
+          style={{
+            color: theme.colors.textPrimary,
+            marginBottom: theme.spacing(1),
+          }}
+        >
+          Dark Mode
+        </Text>
 
-      {profile.bio ? (
-        <Text style={styles.bio}>{profile.bio}</Text>
-      ) : null}
-
+        <Switch
+          value={isDark}
+          onValueChange={toggleTheme}
+          thumbColor={isDark ? theme.colors.primary : "#fff"}
+          trackColor={{ true: theme.colors.primary, false: "#ccc" }}
+        />
+      </View>
+      {profile.bio ? <Text style={styles.bio}>{profile.bio}</Text> : null}
       <Card style={styles.card}>
         <Card.Content>
           <Text style={styles.info}>Total Reading Time: {totalHours} hrs</Text>
           <Text style={styles.info}>Total Sessions: {totalSessions}</Text>
         </Card.Content>
       </Card>
-
       <Card style={styles.card}>
         <Card.Content>
           <Text style={styles.info}>Daily Goal: 1 hr</Text>
@@ -55,7 +74,6 @@ export default function ProfileMain() {
           />
         </Card.Content>
       </Card>
-
       <Pressable
         style={styles.editButton}
         onPress={() => router.push("/session/(modals)/editProfile")}
@@ -66,55 +84,56 @@ export default function ProfileMain() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-    padding: theme.spacing(3),
-    alignItems: "center",
-  },
+const createStyles = (theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+      padding: theme.spacing(3),
+      alignItems: "center",
+    },
 
-  avatar: {
-    backgroundColor: theme.colors.primary,
-    marginBottom: theme.spacing(2),
-  },
+    avatar: {
+      backgroundColor: theme.colors.primary,
+      marginBottom: theme.spacing(2),
+    },
 
-  title: {
-    ...theme.typography.title,
-    color: theme.colors.textPrimary,
-    marginBottom: theme.spacing(1),
-  },
+    title: {
+      ...theme.typography.title,
+      color: theme.colors.textPrimary,
+      marginBottom: theme.spacing(1),
+    },
 
-  bio: {
-    ...theme.typography.body,
-    color: theme.colors.textSecondary,
-    marginBottom: theme.spacing(3),
-    textAlign: "center",
-  },
+    bio: {
+      ...theme.typography.body,
+      color: theme.colors.textSecondary,
+      marginBottom: theme.spacing(3),
+      textAlign: "center",
+    },
 
-  card: {
-    ...theme.components.card,
-    width: "100%",
-    marginBottom: theme.spacing(2),
-  },
+    card: {
+      ...theme.components.card,
+      width: "100%",
+      marginBottom: theme.spacing(2),
+    },
 
-  info: {
-    ...theme.typography.body,
-    color: theme.colors.textPrimary,
-    marginBottom: theme.spacing(1),
-  },
+    info: {
+      ...theme.typography.body,
+      color: theme.colors.textPrimary,
+      marginBottom: theme.spacing(1),
+    },
 
-  editButton: {
-    ...theme.components.button,
-    backgroundColor: theme.colors.primary,
-    paddingVertical: theme.spacing(2),
-    paddingHorizontal: theme.spacing(4),
-    marginTop: theme.spacing(3),
-  },
+    editButton: {
+      ...theme.components.button,
+      backgroundColor: theme.colors.primary,
+      paddingVertical: theme.spacing(2),
+      paddingHorizontal: theme.spacing(4),
+      marginTop: theme.spacing(3),
+    },
 
-  editButtonText: {
-    ...theme.typography.body,
-    color: theme.colors.buttonText,
-    fontWeight: "600",
-  },
-});
+    editButtonText: {
+      ...theme.typography.body,
+      color: theme.colors.textPrimary, // FIXED: no buttonText in your theme
+      fontWeight: "600",
+    },
+  });
