@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { ThemeProvider } from "./constants/themeContext";
+import { Image } from 'react-native';
 
 export default function RootLayout() {
   return (
@@ -10,7 +11,12 @@ export default function RootLayout() {
         <Stack.Screen
           name="session/profile-stack"
           options={{
-            title: "Profile",
+            headerTitle: () => (
+              <Image
+                source={require('../assets/booked-time-logo.png')}
+                style={{ width: 40, height: 40, resizeMode: 'contain' }}
+              />
+            ),
           }}
         />
 
@@ -19,6 +25,8 @@ export default function RootLayout() {
           options={{ presentation: "modal", headerShown: false }}
         />
       </Stack>
+      
+      
     </ThemeProvider>
   );
 }
