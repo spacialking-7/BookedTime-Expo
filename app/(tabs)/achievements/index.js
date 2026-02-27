@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet,Pressable } from "react-native";
 import { Link, Pressable } from "expo-router";
 
 export default function AchievementsScreen() {
