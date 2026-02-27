@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Switch } from "react-native";
 import { Avatar, Card, ProgressBar } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -7,8 +7,9 @@ import { ThemeContext } from "../../constants/themeContext";
 import { useContext } from "react";
 
 export default function ProfileMain() {
-  //dark mode/ light mode function
+  /*dark mode and light mode function*/
   const { theme, isDark, toggleTheme } = useContext(ThemeContext);
+  const styles = createStyles(theme);
 
   const router = useRouter();
   const [sessions, setSessions] = useState([]);
@@ -38,7 +39,6 @@ export default function ProfileMain() {
       <Text style={styles.title}>
         {profile.username ? profile.username : "Your Profile"}
       </Text>
-      
       //light mode dark mode toggle switch
       <View style={{ marginBottom: theme.spacing(3), alignItems: "center" }}>
         <Text
