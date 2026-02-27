@@ -62,7 +62,7 @@ export default function ProfileMain() {
 
       <Pressable
         style={styles.editButton}
-        onPress={() => router.push("/session/profile-stack/editProfile")}
+        onPress={() => router.push("/session/(modals)/editProfile")}
       >
         <Text style={styles.editButtonText}>Edit Profile</Text>
       </Pressable>
