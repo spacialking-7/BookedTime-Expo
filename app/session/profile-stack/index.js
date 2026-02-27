@@ -3,15 +3,7 @@ import { Avatar, Card, ProgressBar } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const colors = {
-  primary: "#1E88E5",
-  secondary: "#FFC107",
-  background: "#F5F5F5",
-  card: "#FFFFFF",
-  textPrimary: "#212121",
-  textSecondary: "#616161",
-};
+import { theme } from "../../constants/theme";
 
 export default function ProfileMain() {
   const router = useRouter();
@@ -56,7 +48,11 @@ export default function ProfileMain() {
       <Card style={styles.card}>
         <Card.Content>
           <Text style={styles.info}>Daily Goal: 1 hr</Text>
-          <ProgressBar progress={Math.min(totalHours / 1, 1)} color={colors.primary} style={{ marginTop: 10 }} />
+          <ProgressBar
+            progress={Math.min(totalHours / 1, 1)}
+            color={theme.colors.primary}
+            style={{ marginTop: theme.spacing(1) }}
+          />
         </Card.Content>
       </Card>
 
@@ -73,49 +69,52 @@ export default function ProfileMain() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
-    padding: 20,
+    backgroundColor: theme.colors.background,
+    padding: theme.spacing(3),
     alignItems: "center",
   },
+
   avatar: {
-    backgroundColor: colors.primary,
-    marginBottom: 15,
+    backgroundColor: theme.colors.primary,
+    marginBottom: theme.spacing(2),
   },
+
   title: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: colors.textPrimary,
-    marginBottom: 5,
+    ...theme.typography.title,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing(1),
   },
+
   bio: {
-    fontSize: 16,
-    color: colors.textSecondary,
-    marginBottom: 20,
+    ...theme.typography.body,
+    color: theme.colors.textSecondary,
+    marginBottom: theme.spacing(3),
     textAlign: "center",
   },
+
   card: {
+    ...theme.components.card,
     width: "100%",
-    backgroundColor: colors.card,
-    borderRadius: 12,
-    padding: 10,
-    marginBottom: 16,
-    elevation: 3,
+    marginBottom: theme.spacing(2),
   },
+
   info: {
-    fontSize: 16,
-    color: colors.textPrimary,
-    marginBottom: 6,
+    ...theme.typography.body,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing(1),
   },
+
   editButton: {
-    backgroundColor: colors.primary,
-    paddingVertical: 14,
-    paddingHorizontal: 30,
-    borderRadius: 10,
-    marginTop: 20,
+    ...theme.components.button,
+    backgroundColor: theme.colors.primary,
+    paddingVertical: theme.spacing(2),
+    paddingHorizontal: theme.spacing(4),
+    marginTop: theme.spacing(3),
   },
+
   editButtonText: {
-    color: "#fff",
-    fontSize: 16,
+    ...theme.typography.body,
+    color: theme.colors.buttonText,
     fontWeight: "600",
   },
 });

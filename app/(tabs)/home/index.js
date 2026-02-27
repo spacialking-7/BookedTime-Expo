@@ -1,3 +1,5 @@
+
+//img source: https://pixabay.com/vectors/elephant-baby-blue-304755/
 import React, { useState, useEffect, useRef } from "react";
 import {
   View,
@@ -14,15 +16,8 @@ import Elephant from "../../../assets/elephant.png";
 import { Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const colors = {
-  primary: "#1E88E5",
-  secondary: "#FFC107",
-  background: "#F5F5F5",
-  card: "#FFFFFF",
-  textPrimary: "#212121",
-  textSecondary: "#616161",
-  buttonText: "#FFFFFF",
-};
+import { theme } from "../../constants/theme";
+
 
 const screenWidth = Dimensions.get("window").width;
 const mascotSize = screenWidth * 0.1; //10% of screen width
@@ -118,7 +113,7 @@ export default function HomeScreen() {
           </Pressable>
 
           <Pressable
-            style={[styles.button, { backgroundColor: colors.secondary }]}
+            style={[styles.button, { backgroundColor: theme.colors.secondary }]}
             onPress={() => setIsTimerRunning(false)}
           >
             <Text style={styles.buttonLabel}>Pause</Text>
@@ -173,56 +168,72 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 20,
-    backgroundColor: colors.background,
+    padding: theme.spacing(3),
+    backgroundColor: theme.colors.background,
     alignItems: "center",
     justifyContent: "flex-start",
   },
 
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    marginBottom: 20,
+  header: {
+    alignItems: "center",
+    marginBottom: theme.spacing(3),
   },
-  timer: {
-    fontSize: 48,
-    fontWeight: "700",
-    marginVertical: 20,
-  },
-  input: {
+
+  content: {
     width: "100%",
-    borderWidth: 1,
-    borderColor: colors.primary,
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 16,
-    backgroundColor: "#fff",
+    alignItems: "center",
   },
+
+  title: {
+    ...theme.typography.title,
+    color: theme.colors.textPrimary,
+    marginTop: theme.spacing(1),
+  },
+
+  timer: {
+    fontSize: 48, // stays custom because it's a special element
+    fontWeight: "700",
+    marginVertical: theme.spacing(2),
+    color: theme.colors.textPrimary,
+  },
+
+  input: {
+    ...theme.components.input,
+    width: "100%",
+    borderColor: theme.colors.primary,
+    marginBottom: theme.spacing(2),
+  },
+
   buttonRow: {
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
+    marginBottom: theme.spacing(2),
   },
+
   button: {
+    ...theme.components.button,
     flex: 1,
-    marginHorizontal: 4,
-    paddingVertical: 12,
-    backgroundColor: colors.primary,
-    borderRadius: 8,
-    alignItems: "center",
+    marginHorizontal: theme.spacing(0.5),
+    backgroundColor: theme.colors.primary,
   },
+
   buttonLabel: {
-    color: "#fff",
+    ...theme.typography.body,
+    color: theme.colors.buttonText,
     fontWeight: "600",
   },
+
   card: {
+    ...theme.components.card,
     width: "100%",
-    marginTop: 20,
+    marginTop: theme.spacing(2),
   },
+
   mascot: {
     width: mascotSize,
     height: mascotSize,
-    marginBottom: 8,
+    marginBottom: theme.spacing(1),
     resizeMode: "contain",
     alignSelf: "center",
   },

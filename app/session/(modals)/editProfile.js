@@ -2,15 +2,7 @@ import { View, Text, TextInput, StyleSheet, Pressable, Alert } from "react-nativ
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
-
-const colors = {
-  primary: "#1E88E5",
-  secondary: "#FFC107",
-  background: "#F5F5F5",
-  card: "#FFFFFF",
-  textPrimary: "#212121",
-  textSecondary: "#616161",
-};
+import { theme } from "../../constants/theme";
 
 export default function EditProfile() {
   const router = useRouter();
@@ -72,49 +64,52 @@ export default function EditProfile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
-    padding: 20,
+    backgroundColor: theme.colors.background,
+    padding: theme.spacing(3),
   },
+
   title: {
-    fontSize: 26,
-    fontWeight: "700",
-    color: colors.textPrimary,
-    marginBottom: 20,
+    ...theme.typography.title,
     textAlign: "center",
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing(3),
   },
+
   label: {
-    fontSize: 16,
-    color: colors.textSecondary,
-    marginBottom: 6,
+    ...theme.typography.body,
+    color: theme.colors.textSecondary,
+    marginBottom: theme.spacing(1),
   },
+
   input: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: 12,
-    borderWidth: 1,
-    borderColor: colors.primary,
-    marginBottom: 20,
+    ...theme.components.input,
+    borderColor: theme.colors.primary,
+    marginBottom: theme.spacing(2.5),
     fontSize: 16,
-    color: colors.textPrimary,
+    color: theme.colors.textPrimary,
   },
+
   saveButton: {
-    backgroundColor: colors.primary,
-    paddingVertical: 14,
-    borderRadius: 10,
-    alignItems: "center",
-    marginBottom: 10,
+    ...theme.components.button,
+    backgroundColor: theme.colors.primary,
+    paddingVertical: theme.spacing(2),
+    borderRadius: theme.radius.md,
+    marginBottom: theme.spacing(2),
   },
+
   saveText: {
-    color: "#fff",
-    fontSize: 16,
+    ...theme.typography.body,
+    color: theme.colors.buttonText,
     fontWeight: "600",
   },
+
   cancelButton: {
-    paddingVertical: 12,
+    paddingVertical: theme.spacing(1.5),
     alignItems: "center",
   },
+
   cancelText: {
-    color: colors.textSecondary,
-    fontSize: 16,
+    ...theme.typography.body,
+    color: theme.colors.textSecondary,
   },
 });

@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { theme } from "../../constants/theme";
 
 export default function HistoryScreen() {
   const [sessions, setSessions] = useState([]);
@@ -9,7 +10,7 @@ export default function HistoryScreen() {
     const loadSessions = async () => {
       const stored = await AsyncStorage.getItem("sessions");
       const parsed = stored ? JSON.parse(stored) : [];
-      setSessions(parsed.reverse()); // newest first
+      setSessions(parsed.reverse());
     };
 
     loadSessions();
@@ -48,46 +49,43 @@ export default function HistoryScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    backgroundColor: "#F5F5F5",
+    padding: theme.spacing(3),
+    backgroundColor: theme.colors.background,
   },
+
   title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-    color: "#1E88E5",
+    ...theme.typography.title,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing(2),
   },
+
   empty: {
-    textAlign: "center",
-    color: "#616161",
-    fontSize: 16,
-    marginTop: 20,
+    ...theme.typography.body,
+    color: theme.colors.textSecondary,
+    marginTop: theme.spacing(2),
   },
+
   card: {
-    backgroundColor: "#FFFFFF",
-    padding: 15,
-    borderRadius: 12,
-    marginBottom: 14,
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 3 },
+    ...theme.components.card,
+    marginBottom: theme.spacing(2),
   },
+
   duration: {
+    ...theme.typography.body,
     fontSize: 20,
     fontWeight: "700",
-    marginBottom: 6,
-    color: "#212121",
+    marginBottom: theme.spacing(1),
+    color: theme.colors.textPrimary,
   },
+
   notes: {
-    fontSize: 16,
-    marginBottom: 6,
-    color: "#424242",
+    ...theme.typography.body,
+    marginBottom: theme.spacing(1),
+    color: theme.colors.textPrimary,
   },
+
   timestamp: {
-    fontSize: 12,
-    color: "#757575",
+    ...theme.typography.small,
+    color: theme.colors.textSecondary,
   },
 });

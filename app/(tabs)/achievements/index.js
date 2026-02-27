@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { theme } from "../../constants/theme";
 
 const screenWidth = Dimensions.get("window").width;
 
 export default function AchievementsScreen() {
-
   const achievementMilestones = [
     { id: "10min", label: "10 Minutes", requiredSeconds: 10 * 60 },
     { id: "30min", label: "30 Minutes", requiredSeconds: 30 * 60 },
@@ -28,7 +28,6 @@ export default function AchievementsScreen() {
     loadTotal();
   }, []);
 
-  // Split into rows of 3
   const chunkArray = (array, size) => {
     const result = [];
     for (let i = 0; i < array.length; i += size) {
@@ -79,49 +78,50 @@ export default function AchievementsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
-    backgroundColor: "#F5F5F5",
+    paddingTop: theme.spacing(5),
+    backgroundColor: theme.colors.background,
   },
 
   title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    marginBottom: 10,
+    ...theme.typography.title,
     textAlign: "center",
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing(1),
   },
 
   subtitle: {
-    fontSize: 16,
-    marginBottom: 30,
+    ...theme.typography.body,
     textAlign: "center",
-    color: "#616161",
+    color: theme.colors.textSecondary,
+    marginBottom: theme.spacing(4),
   },
 
   rowContainer: {
-    width: screenWidth, // full screen width
+    width: screenWidth,
     flexDirection: "row",
-    justifyContent: "center", // center entire row
+    justifyContent: "center",
     alignItems: "center",
   },
 
   card: {
-    width: screenWidth / 3.5, // 3 cards per row
-    marginHorizontal: 8,
-    paddingVertical: 30,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 16,
-    elevation: 4,
+    width: screenWidth / 3.5,
+    marginHorizontal: theme.spacing(1),
+    paddingVertical: theme.spacing(4),
+    backgroundColor: theme.colors.card,
+    borderRadius: theme.radius.lg,
     alignItems: "center",
+    ...theme.shadow.card,
   },
 
   badgeIcon: {
     fontSize: 32,
-    marginBottom: 8,
+    marginBottom: theme.spacing(1),
   },
 
   label: {
-    fontSize: 14,
+    ...theme.typography.body,
     fontWeight: "600",
     textAlign: "center",
+    color: theme.colors.textPrimary,
   },
 });

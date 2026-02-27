@@ -1,24 +1,13 @@
-import { Stack, Link } from 'expo-router';
-import { Pressable, Text } from 'react-native';
+import { Stack } from "expo-router";
 
 export default function RootLayout() {
   return (
-    <Stack
-      screenOptions={{
-        headerTitle: 'BookedTime',
-        headerRight: () => (
-          <Link href="/session/profile-stack" asChild>
-            <Pressable>
-              <Text style={{ fontSize: 16 }}>Profile</Text>
-            </Pressable>
-          </Link>
-        ),
-      }}
-    />
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(modals)" options={{ presentation: "modal" }} />
+    </Stack>
   );
 }
-
-          
 
 
 

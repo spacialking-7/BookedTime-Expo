@@ -1,50 +1,24 @@
-import { Tabs } from 'expo-router';
-import { Button } from 'react-native';
-import { useRouter } from 'expo-router';
+import { Tabs, Link } from "expo-router";
+import { Pressable, Text } from "react-native";
 
 export default function TabsLayout() {
-  const router = useRouter();
-
   return (
-    <Tabs>
-      <Tabs.Screen
-        name="home"
-        options={{
-          title: "Home",
-          headerRight: () => (
-            <Button
-              title="Profile"
-              onPress={() => router.push('/session/profile-stack')}
-            />
-          )
-        }}
-      />
-
-      <Tabs.Screen
-        name="history"
-        options={{
-          title: "History",
-          headerRight: () => (
-            <Button
-              title="Profile"
-              onPress={() => router.push('/session/profile-stack')}
-            />
-          )
-        }}
-      />
-
-      <Tabs.Screen
-        name="achievements"
-        options={{
-          title: "Achievements",
-          headerRight: () => (
-            <Button
-              title="Profile"
-              onPress={() => router.push('/session/profile-stack')}
-            />
-          )
-        }}
-      />
+    <Tabs
+      screenOptions={{
+        headerTitle: "BookedTime",
+        headerRight: () => (
+          <Link href="/profile" asChild>
+            <Pressable>
+              <Text style={{ fontSize: 16 }}>Profile</Text>
+            </Pressable>
+          </Link>
+        ),
+      }}
+    >
+      <Tabs.Screen name="home" options={{ title: "Home" }} />
+      <Tabs.Screen name="history" options={{ title: "History" }} />
+      <Tabs.Screen name="achievements" options={{ title: "Achievements" }} />
+      <Tabs.Screen name="profile" options={{ title: "Profile" }} />
     </Tabs>
   );
 }
