@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   rowContainer: {
   width: 360, // adjust if needed
   flexDirection: "row",
-  justifyContent: "space-between",
+  justifyContent: "center",
   paddingHorizontal: 10,
 },
 
