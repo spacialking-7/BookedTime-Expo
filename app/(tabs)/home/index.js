@@ -137,11 +137,13 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
     padding: 20,
     backgroundColor: colors.background,
     alignItems: "center",
+    justifyContent: "flex-start",
   },
+
   title: {
     fontSize: 24,
     fontWeight: "bold",
@@ -182,10 +184,10 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 20,
   },
-mascot: {
-  width: mascotSize,
-  height: mascotSize,
-  marginBottom: 12,
-  resizeMode: "contain"
-}
+  mascot: {
+    width: mascotSize,
+    height: mascotSize,
+    marginBottom: 12,
+    resizeMode: "contain",
+  },
 });
