@@ -6,10 +6,12 @@ import {
   ScrollView,
   StyleSheet,
   Pressable,
-  Animated
+  Animated,
 } from "react-native";
 import { Card, FAB } from "react-native-paper";
-
+import { Image } from "react-native";
+import Elephant from "../../../assets/elephant.png";
+import { Dimensions } from "react-native";
 
 const colors = {
   primary: "#1E88E5",
@@ -21,6 +23,9 @@ const colors = {
   buttonText: "#FFFFFF",
 };
 
+const screenWidth = Dimensions.get("window").width;
+const mascotSize = screenWidth * 0.3; // 30% of screen width
+
 export default function HomeScreen() {
   const [elapsed, setElapsed] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
@@ -31,22 +36,30 @@ export default function HomeScreen() {
   const quotes = [
     "Reading is dreaming with open eyes.",
     "One page a day changes your life.",
-    "Small progress is still progress."
+    "Small progress is still progress.",
   ];
 
   const fabAnim = useRef(new Animated.Value(0)).current;
 
   const animateFAB = () => {
     Animated.sequence([
-      Animated.timing(fabAnim, { toValue: -20, duration: 200, useNativeDriver: true }),
-      Animated.timing(fabAnim, { toValue: 0, duration: 200, useNativeDriver: true })
+      Animated.timing(fabAnim, {
+        toValue: -20,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fabAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
     ]).start();
   };
 
   useEffect(() => {
     if (isTimerRunning) {
       intervalRef.current = setInterval(() => {
-        setElapsed(prev => prev + 1);
+        setElapsed((prev) => prev + 1);
       }, 1000);
     } else {
       clearInterval(intervalRef.current);
@@ -55,14 +68,19 @@ export default function HomeScreen() {
     return () => clearInterval(intervalRef.current);
   }, [isTimerRunning]);
 
-  const minutes = Math.floor(elapsed / 60).toString().padStart(2, "0");
+  const minutes = Math.floor(elapsed / 60)
+    .toString()
+    .padStart(2, "0");
   const seconds = (elapsed % 60).toString().padStart(2, "0");
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Image source={Elephant} style={styles.mascot} />
       <Text style={styles.title}>Booked Time</Text>
 
-      <Text style={styles.timer}>{minutes}:{seconds}</Text>
+      <Text style={styles.timer}>
+        {minutes}:{seconds}
+      </Text>
 
       <TextInput
         placeholder="Add notes..."
@@ -164,4 +182,10 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 20,
   },
+mascot: {
+  width: mascotSize,
+  height: mascotSize,
+  marginBottom: 12,
+  resizeMode: "contain"
+}
 });
