@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const screenWidth = Dimensions.get("window").width;
+
 export default function AchievementsScreen() {
-  // Milestones based on total reading time
+
   const achievementMilestones = [
     { id: "10min", label: "10 Minutes", requiredSeconds: 10 * 60 },
     { id: "30min", label: "30 Minutes", requiredSeconds: 30 * 60 },
@@ -15,12 +17,10 @@ export default function AchievementsScreen() {
 
   const [totalSeconds, setTotalSeconds] = useState(0);
 
-  // Load total reading time from saved sessions
   useEffect(() => {
     const loadTotal = async () => {
       const stored = await AsyncStorage.getItem("sessions");
       const sessions = stored ? JSON.parse(stored) : [];
-
       const total = sessions.reduce((sum, s) => sum + s.duration, 0);
       setTotalSeconds(total);
     };
@@ -28,109 +28,100 @@ export default function AchievementsScreen() {
     loadTotal();
   }, []);
 
-  // split into rows of 3
-const chunkArray = (array, size) => {
-  const result = [];
-  for (let i = 0; i < array.length; i += size) {
-    result.push(array.slice(i, i + size));
-  }
-  return result;
-};
+  // Split into rows of 3
+  const chunkArray = (array, size) => {
+    const result = [];
+    for (let i = 0; i < array.length; i += size) {
+      result.push(array.slice(i, i + size));
+    }
+    return result;
+  };
 
-const badgeRows = chunkArray(achievementMilestones, 3);
+  const badgeRows = chunkArray(achievementMilestones, 3);
 
-return (
-  <View style={{ flex: 1, backgroundColor: "#F5F5F5" }}>
-    <Text style={styles.title}>Achievements</Text>
-    <Text style={styles.subtitle}>Track your milestones here.</Text>
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Achievements</Text>
+      <Text style={styles.subtitle}>Track your milestones here.</Text>
 
-    <ScrollView
-      horizontal
-      pagingEnabled
-      showsHorizontalScrollIndicator={false}
-    >
-      {badgeRows.map((row, rowIndex) => (
-        <View key={rowIndex} style={styles.rowContainer}>
-          {row.map((a) => {
-            const isUnlocked = totalSeconds >= a.requiredSeconds;
+      <ScrollView
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+      >
+        {badgeRows.map((row, rowIndex) => (
+          <View key={rowIndex} style={styles.rowContainer}>
+            {row.map((a) => {
+              const isUnlocked = totalSeconds >= a.requiredSeconds;
 
-            return (
-              <View
-                key={a.id}
-                style={[
-                  styles.card,
-                  { opacity: isUnlocked ? 1 : 0.4 },
-                ]}
-              >
-                <Text style={styles.badgeText}>
-                  {isUnlocked ? "🏆" : "🔒"}
-                </Text>
-                <Text style={styles.label}>
-                  {a.label}
-                </Text>
-              </View>
-            );
-          })}
-        </View>
-      ))}
-    </ScrollView>
-  </View>
-);
+              return (
+                <View
+                  key={a.id}
+                  style={[
+                    styles.card,
+                    { opacity: isUnlocked ? 1 : 0.4 },
+                  ]}
+                >
+                  <Text style={styles.badgeIcon}>
+                    {isUnlocked ? "🏆" : "🔒"}
+                  </Text>
+                  <Text style={styles.label}>{a.label}</Text>
+                </View>
+              );
+            })}
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    flex: 1,
+    paddingTop: 40,
     backgroundColor: "#F5F5F5",
   },
+
   title: {
     fontSize: 32,
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
   },
+
   subtitle: {
     fontSize: 16,
-    marginBottom: 20,
+    marginBottom: 30,
     textAlign: "center",
     color: "#616161",
   },
-  card: {
-    backgroundColor: "#FFFFFF",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 12,
-    elevation: 2,
-  },
-  badgeText: {
-    fontSize: 18,
-    fontWeight: "500",
-  },
+
   rowContainer: {
-  width: 360, // adjust if needed
-  flexDirection: "row",
-  justifyContent: "center",
-  paddingHorizontal: 10,
-},
+    width: screenWidth, // full screen width
+    flexDirection: "row",
+    justifyContent: "center", // center entire row
+    alignItems: "center",
+  },
 
-card: {
-  flex: 1,
-  backgroundColor: "#FFFFFF",
-  marginHorizontal: 6,
-  paddingVertical: 25,
-  borderRadius: 14,
-  elevation: 3,
-  alignItems: "center",
-},
+  card: {
+    width: screenWidth / 3.5, // 3 cards per row
+    marginHorizontal: 8,
+    paddingVertical: 30,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    elevation: 4,
+    alignItems: "center",
+  },
 
-badgeText: {
-  fontSize: 32,
-  marginBottom: 8,
-},
+  badgeIcon: {
+    fontSize: 32,
+    marginBottom: 8,
+  },
 
-label: {
-  fontSize: 14,
-  fontWeight: "600",
-  textAlign: "center",
-},
+  label: {
+    fontSize: 14,
+    fontWeight: "600",
+    textAlign: "center",
+  },
 });
