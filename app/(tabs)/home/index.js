@@ -106,6 +106,18 @@ export default function HomeScreen() {
           >
             <Text style={styles.buttonLabel}>Pause</Text>
           </Pressable>
+
+          <Pressable
+            style={[styles.button, { backgroundColor: "#E53935" }]}
+            onPress={() => {
+              setIsTimerRunning(false);
+              clearInterval(intervalRef.current);
+              setElapsed(0);
+              setNotesInput("");
+            }}
+          >
+            <Text style={styles.buttonLabel}>Stop</Text>
+          </Pressable>
         </View>
 
         {showQuote && (
@@ -194,6 +206,5 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     resizeMode: "contain",
     alignSelf: "center",
-   
   },
 });
