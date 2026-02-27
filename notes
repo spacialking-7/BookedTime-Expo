@@ -1,4 +1,10 @@
-
+Achivements page: 
+I tested the first 10 Minute acheivement page
+-No notification when it's unlocked 
+-Refreshed and saw the first badge revealed
+-Future implementation = Unlock different monsters with each bage
+    -able to look back at your monster collection 
+    -can pin your monster to your clock/home page (index.js)
 
 
 
