@@ -3,14 +3,30 @@ import { Text, View } from "react-native";
 
 export default function BadgeDetail() {
   const { badge } = useLocalSearchParams();
+  const badgeDetails = {
+      'First Session (1 session)' : 'Congratulations on completing your first reading session! This badge is awarded for completing at least one reading session.',
+  '1 Hour (60 min)': 'You’ve read for a total of 60 minutes.',
+  'Big Reader (10h total)': 'You’ve accumulated 10 hours of reading time.',
+  'Read-Oholic (50h total)': 'You’ve reached 50 hours of reading.',
+  'Marathon Reader (3h session)': 'You read for 3 hours straight.',
+  };
+  
+
+  
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold" }}>
-        Achievement: {badge}
-      </Text>
-      <Text style={{ marginTop: 10 }}>
-        Details about the {badge} achievement will be shown here.
+    <View style={styles.container}>
+      <Text style={styles.title}>Achievement Unlocked</Text>
+      <Text style={styles.badgeName}>{badge}</Text>
+      <Text style={styles.description}>
+        Details about the "{badge}" achievement will go here.
       </Text>
     </View>
   );
 }
+
+const styles = {
+  container: { flex: 1, padding: 20 },
+  title: { fontSize: 24, fontWeight: "bold", marginBottom: 10 },
+  badgeName: { fontSize: 18, marginBottom: 10 },
+  description: { fontSize: 16 }
+};
