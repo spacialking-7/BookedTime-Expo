@@ -15,10 +15,9 @@ export default function BadgeDetail() {
   
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Achievement Unlocked</Text>
-      <Text style={styles.badgeName}>{badge}</Text>
+      <Text style={styles.title}>{badge}</Text>
       <Text style={styles.description}>
-        Details about the "{badge}" achievement will go here.
+        {badgeDetails[badge] || ""}
       </Text>
     </View>
   );
