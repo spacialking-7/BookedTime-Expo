@@ -14,7 +14,7 @@ export default function TabsLayout() {
           headerRight: () => (
             <Button
               title="Profile"
-              onPress={() => router.push('/profile-stack')}
+              onPress={() => router.push('/session/profile-stack')}
             />
           )
         }}
@@ -27,7 +27,7 @@ export default function TabsLayout() {
           headerRight: () => (
             <Button
               title="Profile"
-              onPress={() => router.push('/profile-stack')}
+              onPress={() => router.push('/session/profile-stack')}
             />
           )
         }}
@@ -40,7 +40,7 @@ export default function TabsLayout() {
           headerRight: () => (
             <Button
               title="Profile"
-              onPress={() => router.push('/profile-stack')}
+              onPress={() => router.push('/session/profile-stack')}
             />
           )
         }}
