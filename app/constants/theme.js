@@ -1,4 +1,4 @@
-import { colors } from "./colors";
+import { colors, colorsLight } from "./colors";
 import { spacing } from "./spacing";
 
 export const theme = {
