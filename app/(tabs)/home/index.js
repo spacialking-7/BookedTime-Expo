@@ -12,6 +12,7 @@ import { Card, FAB } from "react-native-paper";
 import { Image } from "react-native";
 import Elephant from "../../../assets/elephant.png";
 import { Dimensions } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const colors = {
   primary: "#1E88E5",
@@ -54,6 +55,22 @@ export default function HomeScreen() {
         useNativeDriver: true,
       }),
     ]).start();
+  };
+
+  //save session to AsyncStorage when timer is stopped (history tab)
+  const saveSession = async () => {
+    const newSession = {
+      id: Date.now(),
+      duration: elapsed,
+      notes: notesInput,
+      timestamp: new Date().toISOString(),
+    };
+
+    const existing = await AsyncStorage.getItem("sessions");
+    const sessions = existing ? JSON.parse(existing) : [];
+
+    sessions.push(newSession);
+    await AsyncStorage.setItem("sessions", JSON.stringify(sessions));
   };
 
   useEffect(() => {
@@ -109,9 +126,11 @@ export default function HomeScreen() {
 
           <Pressable
             style={[styles.button, { backgroundColor: "#E53935" }]}
-            onPress={() => {
+            onPress={async () => {
               setIsTimerRunning(false);
               clearInterval(intervalRef.current);
+
+              await saveSession(); // now valid
               setElapsed(0);
               setNotesInput("");
             }}
