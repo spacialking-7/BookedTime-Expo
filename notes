@@ -1,0 +1,36 @@
+my-library-app/
+├── app/
+│   ├── _layout.js              <- Root stack
+│   ├── (tabs)/_layout.js       <- Tabs layout
+│   ├── (tabs)/Timer.js         <- Timer tab screen
+│   ├── (tabs)/History.js       <- History tab screen
+│   ├── profile/ProfileMain.js  <- Profile stack start
+│   └── profile/EditProfile.js  <- Profile stack screen
+├── app.json
+└── package.json
+
+BookedTime-Expo
+|
+|-- app/
+|   |-- _layout.js              <- Root stack
+|   |--+not-found.js             <- 404 screen
+|---------------
+|--(modals)/
+|   -- _layout.js              <- Modals stack
+|   -- add-session.js          <- Add session modal
+|   -- info.js                 <- Edit modal details
+|--(tabs)/
+|   -- _layout.js              <- Tabs layout
+|   -- history/
+            --  index.js                 <- History tab screen
+    --home/
+            --  index.js                 <- Home tab screen
+    --profile/
+            --  index.js                 <- Profile tab screen
+|--achievements/
+            -- index.js                  <- Achievements tab screen   
+            
+|--session/
+            -- index.js                 <- Session stack start
+            -- [id].js                  <- Session details screen
+
