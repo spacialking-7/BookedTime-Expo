@@ -24,7 +24,7 @@ const colors = {
 };
 
 const screenWidth = Dimensions.get("window").width;
-const mascotSize = screenWidth * 0.1;  //10% of screen width
+const mascotSize = screenWidth * 0.1; //10% of screen width
 
 export default function HomeScreen() {
   const [elapsed, setElapsed] = useState(0);
@@ -74,46 +74,50 @@ export default function HomeScreen() {
   const seconds = (elapsed % 60).toString().padStart(2, "0");
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image source={Elephant} style={styles.mascot} />
-      <Text style={styles.title}>Booked Time</Text>
-
-      <Text style={styles.timer}>
-        {minutes}:{seconds}
-      </Text>
-
-      <TextInput
-        placeholder="Add notes..."
-        style={styles.input}
-        value={notesInput}
-        onChangeText={setNotesInput}
-      />
-
-      <View style={styles.buttonRow}>
-        <Pressable
-          style={styles.button}
-          onPress={() => setIsTimerRunning(true)}
-        >
-          <Text style={styles.buttonLabel}>Start</Text>
-        </Pressable>
-
-        <Pressable
-          style={[styles.button, { backgroundColor: colors.secondary }]}
-          onPress={() => setIsTimerRunning(false)}
-        >
-          <Text style={styles.buttonLabel}>Pause</Text>
-        </Pressable>
+    <ScrollView contentContainerStyle={styles.container} scrollEnabled={false}>
+      <View style={styles.header}>
+        <Image source={Elephant} style={styles.mascot} />
+        <Text style={styles.title}>Booked Time</Text>
       </View>
 
-      {showQuote && (
-        <Card style={styles.card}>
-          <Card.Content>
-            <Text style={{ textAlign: "center" }}>
-              {quotes[Math.floor(Math.random() * quotes.length)]}
-            </Text>
-          </Card.Content>
-        </Card>
-      )}
+      <View style={styles.content}>
+        <Text style={styles.timer}>
+          {minutes}:{seconds}
+        </Text>
+
+        <TextInput
+          placeholder="Add notes..."
+          style={styles.input}
+          value={notesInput}
+          onChangeText={setNotesInput}
+        />
+
+        <View style={styles.buttonRow}>
+          <Pressable
+            style={styles.button}
+            onPress={() => setIsTimerRunning(true)}
+          >
+            <Text style={styles.buttonLabel}>Start</Text>
+          </Pressable>
+
+          <Pressable
+            style={[styles.button, { backgroundColor: colors.secondary }]}
+            onPress={() => setIsTimerRunning(false)}
+          >
+            <Text style={styles.buttonLabel}>Pause</Text>
+          </Pressable>
+        </View>
+
+        {showQuote && (
+          <Card style={styles.card}>
+            <Card.Content>
+              <Text style={{ textAlign: "center" }}>
+                {quotes[Math.floor(Math.random() * quotes.length)]}
+              </Text>
+            </Card.Content>
+          </Card>
+        )}
+      </View>
 
       <Animated.View
         style={{
@@ -137,7 +141,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 20,
     backgroundColor: colors.background,
     alignItems: "center",
@@ -145,7 +149,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: "bold",
     marginBottom: 20,
   },
@@ -187,7 +191,9 @@ const styles = StyleSheet.create({
   mascot: {
     width: mascotSize,
     height: mascotSize,
-    marginBottom: 12,
+    marginBottom: 8,
     resizeMode: "contain",
+    alignSelf: "center",
+   
   },
 });
