@@ -5,7 +5,7 @@ export default function RootLayout() {
   return (
     <Stack
       screenOptions={{
-        headerTitle: '',
+        headerTitle: 'Booked Time',
         headerRight: () => (
           <Link href="/session/profile-stack" asChild>
             <Pressable>
