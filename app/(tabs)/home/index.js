@@ -24,7 +24,7 @@ const colors = {
 };
 
 const screenWidth = Dimensions.get("window").width;
-const mascotSize = screenWidth * 0.3; // 30% of screen width
+const mascotSize = screenWidth * 0.1;  //10% of screen width
 
 export default function HomeScreen() {
   const [elapsed, setElapsed] = useState(0);
