@@ -1,27 +1,55 @@
 import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
-import { Link } from "expo-router";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AchievementsScreen() {
-  const badges = [
-    "First Session (1 session)",
-    "1 Hour (60 min)",
-    "Big Reader (10h total)",
-    "Read-Oholic (50h total)",
-    "Marathon Reader (3h session)",
+  // Milestones based on total reading time
+  const achievementMilestones = [
+    { id: "10min", label: "10 Minutes", requiredSeconds: 10 * 60 },
+    { id: "30min", label: "30 Minutes", requiredSeconds: 30 * 60 },
+    { id: "1h", label: "1 Hour", requiredSeconds: 60 * 60 },
+    { id: "2h", label: "2 Hours", requiredSeconds: 2 * 60 * 60 },
+    { id: "5h", label: "5 Hours", requiredSeconds: 5 * 60 * 60 },
+    { id: "10h", label: "10 Hours", requiredSeconds: 10 * 60 * 60 },
   ];
+
+  const [totalSeconds, setTotalSeconds] = useState(0);
+
+  // Load total reading time from saved sessions
+  useEffect(() => {
+    const loadTotal = async () => {
+      const stored = await AsyncStorage.getItem("sessions");
+      const sessions = stored ? JSON.parse(stored) : [];
+
+      const total = sessions.reduce((sum, s) => sum + s.duration, 0);
+      setTotalSeconds(total);
+    };
+
+    loadTotal();
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Achievements</Text>
       <Text style={styles.subtitle}>Track your milestones here.</Text>
 
-      {badges.map((b) => (
-        <Link key={b} href={`/achievements/${b}`} asChild>
-          <Pressable style={styles.card}>
-            <Text style={styles.badgeText}>{b}</Text>
-          </Pressable>
-        </Link>
-      ))}
+      {achievementMilestones.map((a) => {
+        const isUnlocked = totalSeconds >= a.requiredSeconds;
+
+        return (
+          <View
+            key={a.id}
+            style={[
+              styles.card,
+              { opacity: isUnlocked ? 1 : 0.4 } // dim locked ones
+            ]}
+          >
+            <Text style={styles.badgeText}>
+              {isUnlocked ? "🏆" : "🔒"} {a.label}
+            </Text>
+          </View>
+        );
+      })}
     </ScrollView>
   );
 }
