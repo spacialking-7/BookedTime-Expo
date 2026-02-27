@@ -7,7 +7,7 @@ export default function TabsLayout() {
       screenOptions={{
         headerTitle: "BookedTime",
         headerRight: () => (
-          <Link href="/profile" asChild>
+          <Link href="/session/profile-stack" asChild>
             <Pressable>
               <Text style={{ fontSize: 16 }}>Profile</Text>
             </Pressable>
