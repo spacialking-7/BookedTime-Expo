@@ -28,30 +28,54 @@ export default function AchievementsScreen() {
     loadTotal();
   }, []);
 
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Achievements</Text>
-      <Text style={styles.subtitle}>Track your milestones here.</Text>
+  // split into rows of 3
+const chunkArray = (array, size) => {
+  const result = [];
+  for (let i = 0; i < array.length; i += size) {
+    result.push(array.slice(i, i + size));
+  }
+  return result;
+};
 
-      {achievementMilestones.map((a) => {
-        const isUnlocked = totalSeconds >= a.requiredSeconds;
+const badgeRows = chunkArray(achievementMilestones, 3);
 
-        return (
-          <View
-            key={a.id}
-            style={[
-              styles.card,
-              { opacity: isUnlocked ? 1 : 0.4 } // dim locked ones
-            ]}
-          >
-            <Text style={styles.badgeText}>
-              {isUnlocked ? "🏆" : "🔒"} {a.label}
-            </Text>
-          </View>
-        );
-      })}
+return (
+  <View style={{ flex: 1, backgroundColor: "#F5F5F5" }}>
+    <Text style={styles.title}>Achievements</Text>
+    <Text style={styles.subtitle}>Track your milestones here.</Text>
+
+    <ScrollView
+      horizontal
+      pagingEnabled
+      showsHorizontalScrollIndicator={false}
+    >
+      {badgeRows.map((row, rowIndex) => (
+        <View key={rowIndex} style={styles.rowContainer}>
+          {row.map((a) => {
+            const isUnlocked = totalSeconds >= a.requiredSeconds;
+
+            return (
+              <View
+                key={a.id}
+                style={[
+                  styles.card,
+                  { opacity: isUnlocked ? 1 : 0.4 },
+                ]}
+              >
+                <Text style={styles.badgeText}>
+                  {isUnlocked ? "🏆" : "🔒"}
+                </Text>
+                <Text style={styles.label}>
+                  {a.label}
+                </Text>
+              </View>
+            );
+          })}
+        </View>
+      ))}
     </ScrollView>
-  );
+  </View>
+);
 }
 
 const styles = StyleSheet.create({
@@ -82,4 +106,31 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "500",
   },
+  rowContainer: {
+  width: 360, // adjust if needed
+  flexDirection: "row",
+  justifyContent: "space-between",
+  paddingHorizontal: 10,
+},
+
+card: {
+  flex: 1,
+  backgroundColor: "#FFFFFF",
+  marginHorizontal: 6,
+  paddingVertical: 25,
+  borderRadius: 14,
+  elevation: 3,
+  alignItems: "center",
+},
+
+badgeText: {
+  fontSize: 32,
+  marginBottom: 8,
+},
+
+label: {
+  fontSize: 14,
+  fontWeight: "600",
+  textAlign: "center",
+},
 });
